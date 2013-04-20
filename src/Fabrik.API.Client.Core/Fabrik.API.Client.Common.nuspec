@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <licenseUrl>https://raw.github.com/FabrikCreations/fabrikapi-client-net/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/FabrikCreations/fabrikapi-client-net</projectUrl>
+    <copyright>Copyright 2013 Fabrik Creations</copyright>
+    <tags>fabrik apiclient</tags>
+    <dependencies>
+      <dependency id="Fabrik.Common" />
+      <dependency id="Fabrik.Common.Logging" />
+      <dependency id="Microsoft.AspNet.WebApi.Core" />
+    </dependencies>
+  </metadata>
+</package>

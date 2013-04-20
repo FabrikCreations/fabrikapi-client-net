@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client", "src\Fabrik.API.Client\Fabrik.API.Client.csproj", "{E733F816-6A8A-46A0-B6AB-DF69E9864F1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69296EAA-0BDA-4B77-97B5-A6D51C77BC3D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{CFB0667A-5026-4252-A83E-8F94322237DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{06DD0DC3-925D-45B6-9DBE-3E42AE57CEB4}"
+	ProjectSection(SolutionItems) = preProject
+		src\Common\CommonAssemblyInfo.cs = src\Common\CommonAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client.Core", "src\Fabrik.API.Client.Core\Fabrik.API.Client.Core.csproj", "{166D7C11-5837-4922-A59A-8375B2E60765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client.Core.Specs", "src\Specs\Fabrik.API.Client.Core.Specs\Fabrik.API.Client.Core.Specs.csproj", "{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E733F816-6A8A-46A0-B6AB-DF69E9864F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E733F816-6A8A-46A0-B6AB-DF69E9864F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E733F816-6A8A-46A0-B6AB-DF69E9864F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E733F816-6A8A-46A0-B6AB-DF69E9864F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{166D7C11-5837-4922-A59A-8375B2E60765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{166D7C11-5837-4922-A59A-8375B2E60765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{166D7C11-5837-4922-A59A-8375B2E60765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{166D7C11-5837-4922-A59A-8375B2E60765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2} = {CFB0667A-5026-4252-A83E-8F94322237DB}
+	EndGlobalSection
+EndGlobal

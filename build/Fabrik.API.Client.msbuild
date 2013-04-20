@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="4.0"
+         DefaultTargets="Default">
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$([System.IO.Path]::GetDirectoryName($(MSBuildProjectDirectory)))</SolutionDir>
+    <ScriptsDir>$(SolutionDir)\build</ScriptsDir>
+    <NugetExeDir>$(SolutionDir)\.nuget</NugetExeDir>
+    <Solutionfile>$(SolutionDir)\Fabrik.API.Client.sln</Solutionfile>
+    <BuildArtifactsDir>$(SolutionDir)\artifacts</BuildArtifactsDir>
+    <NuGetPackageOutputDir>$(BuildArtifactsDir)\packages</NuGetPackageOutputDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AppProjFiles Include="$(SolutionDir)\src\Fabrik.API.Client.*\*.csproj" />
+    <TestProjFiles Include="$(SolutionDir)\src\Specs\**\*.csproj" />
+    <NuGetPackageProjects Include="$(SolutionDir)\src\Fabrik.API.Client\Fabrik.API.Client.csproj;$(SolutionDir)\src\Fabrik.API.Client.Core\Fabrik.API.Client.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="Default" DependsOnTargets="Compile; Specs; Package" />
+  <Target Name="DefaultCI" DependsOnTargets="Compile; Specs; Package; PublishPackage" />
+
+  <Target Name="Clean">
+    <RemoveDir Directories="$(BuildArtifactsDir)" />
+  </Target>
+
+  <Target Name="Init" DependsOnTargets="Clean">
+    <MakeDir Directories="$(BuildArtifactsDir);$(NuGetPackageOutputDir)" />
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Init">
+    <MSBuild Projects="@(AppProjFiles)" Targets="Rebuild" Properties="OutDir=$(BuildArtifactsDir);Configuration=$(Configuration)" />
+    <MSBuild Projects="@(TestProjFiles)" Targets="Rebuild" Properties="Configuration=Debug">
+      <Output PropertyName="TestProjOutputs" TaskParameter="TargetOutputs" />
+    </MSBuild>
+  </Target>
+  
+  <Target Name="Specs" DependsOnTargets="Compile">
+    <PropertyGroup>
+      <MSpecAssemblies>$(TestProjOutputs.Replace(";", " "))</MSpecAssemblies>
+      <MSpecCommand>$(SolutionDir)\packages\Machine.Specifications.0.5.12\tools\mspec-clr4.exe $(MSpecAssemblies)</MSpecCommand>
+    </PropertyGroup>
+    <Message Importance="high" Text="Running Specs with this command: $(MSpecCommand)"/>
+    <Exec Command="$(MSpecCommand)" />
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Specs">
+    <Exec Command="$(NugetExeDir)\nuget.exe pack %(NuGetPackageProjects.FullPath) -Build -OutputDirectory $(NuGetPackageOutputDir)" />
+  </Target>
+</Project>

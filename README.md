@@ -1,6 +1,6 @@
 # Fabrik API Client for .NET
 
-This client makes it easy to work with the Fabrik API from your .NET applications.
+This client makes it easy to work with the [Fabrik API](https://getfabrik.com) from your .NET applications.
 
 ## Quick Start
 

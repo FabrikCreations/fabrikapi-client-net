@@ -21,7 +21,8 @@ All resource clients require an `ApiClient` instance to communicate with the Fab
 **Configuration File**
 
 	<connectionStrings>
-		<add name="FabrikAPI" connectionString="Uri=https://api.onfabrik.com;username=you@domain.com;password=YourFabrikPassword" />
+		<add name="FabrikAPI" 
+			 connectionString="Uri=https://api.onfabrik.com;username=you@domain.com;password=YourFabrikPassword"/>
 	</connectionStrings>
 
 	var api = ApiClient.FromConnectionString("FabrikAPI");
@@ -74,6 +75,7 @@ All API operations are asynchronous, returning `Task` or `Task<T>`.
 	            // Get an IBlogClient instance so we can work with our Fabrik Blog
 	            var blog = api.GetBlogClient();
 	
+				// all async baby!
 	            var result = await blog.GetPostsAsync(
 	                siteId: site.Id,
 	                tags: new[] { "Fabrik" },

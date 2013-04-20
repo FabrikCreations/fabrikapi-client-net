@@ -26,7 +26,7 @@ require-param $nugetApiKey -paramName "nugetApiKey"
 #safely find the solutionDir
 $ps1Dir = (Split-Path -parent $MyInvocation.MyCommand.Definition)
 $solutionDir = Split-Path -Path $ps1Dir -Parent
-$nugetExePath = resolve-path(join-path $solutionDir "src\.nuget")
+$nugetExePath = resolve-path(join-path $solutionDir "\.nuget")
 
 $packages = dir "$solutionDir\artifacts\packages\*.nupkg"
 

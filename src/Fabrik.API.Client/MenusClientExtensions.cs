@@ -7,7 +7,7 @@ namespace Fabrik.API.Client
 {
     public static class MenusClientExtensions
     {
-        public static async Task<Menu> GetMenuByName(this IMenusClient client, int siteId, string name)
+        public static async Task<Menu> GetMenuByNameAsync(this IMenusClient client, int siteId, string name)
         {
             Ensure.Argument.NotNullOrEmpty(name, "name");
             var menus = await client.GetMenusAsync(siteId: siteId, name: name).ConfigureAwait(false);

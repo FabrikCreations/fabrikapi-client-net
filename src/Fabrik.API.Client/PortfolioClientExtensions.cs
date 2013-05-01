@@ -9,7 +9,7 @@ namespace Fabrik.API.Client
 {
     public static class PortfolioClientExtensions
     {
-        public static async Task<Project> GetProjectBySlug(this IPortfolioClient client, int siteId, string slug)
+        public static async Task<Project> GetProjectBySlugAsync(this IPortfolioClient client, int siteId, string slug)
         {
             Ensure.Argument.NotNull(client, "client");
             Ensure.Argument.NotNullOrEmpty(slug, "slug");
@@ -17,13 +17,13 @@ namespace Fabrik.API.Client
             return projects.Items.FirstOrDefault();
         }
 
-        public static Task<PagedResult<Project>> GetProjectsByCategory(this IPortfolioClient client, int siteId, int categoryId, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
+        public static Task<PagedResult<Project>> GetProjectsByCategoryAsync(this IPortfolioClient client, int siteId, int categoryId, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
         {
             Ensure.Argument.NotNull(client, "client");
             return client.GetProjectsAsync(siteId, categoryId: categoryId, tags: tags, pageSize: pageSize, page: page);
         }
 
-        public static Task<PagedResult<Project>> GetProjectsByCategory(this IPortfolioClient client, int siteId, string categorySlug, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
+        public static Task<PagedResult<Project>> GetProjectsByCategoryAsync(this IPortfolioClient client, int siteId, string categorySlug, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
         {
             Ensure.Argument.NotNull(client, "client");
             Ensure.Argument.NotNull(categorySlug);
@@ -36,7 +36,7 @@ namespace Fabrik.API.Client
                 pageSize: pageSize);
         }
 
-        public static async Task<PortfolioCategory> GetCategoryBySlug(this IPortfolioClient client, int siteId, string slug)
+        public static async Task<PortfolioCategory> GetCategoryBySlugAsync(this IPortfolioClient client, int siteId, string slug)
         {
             Ensure.Argument.NotNull(client, "client");
             Ensure.Argument.NotNull(slug, "slug");

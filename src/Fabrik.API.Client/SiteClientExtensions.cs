@@ -6,7 +6,7 @@ namespace Fabrik.API.Client
 {
     public static class SiteClientExtensions
     {
-        public static async Task<Site> GetDefaultSite(this ISiteClient client)
+        public static async Task<Site> GetDefaultSiteAsync(this ISiteClient client)
         {
             var sites = await client.GetSitesAsync();
             return sites.FirstOrDefault();

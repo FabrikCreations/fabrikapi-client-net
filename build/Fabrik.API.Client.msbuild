@@ -16,7 +16,7 @@
   <ItemGroup>
     <AppProjFiles Include="$(SolutionDir)\src\Fabrik.API.Client.*\*.csproj" />
     <TestProjFiles Include="$(SolutionDir)\src\Specs\**\*.csproj" />
-    <NuGetPackageProjects Include="$(SolutionDir)\src\Fabrik.API.Client\Fabrik.API.Client.csproj;$(SolutionDir)\src\Fabrik.API.Client.Core\Fabrik.API.Client.Core.csproj" />
+    <NuGetPackageProjects Include="$(SolutionDir)\src\Fabrik.API.Client\Fabrik.API.Client.csproj;$(SolutionDir)\src\Fabrik.API.Client.Core\Fabrik.API.Client.Core.csproj;$(SolutionDir)\src\Fabrik.API.Client.MvcHelpers\Fabrik.API.Client.MvcHelpers.csproj" />
   </ItemGroup>
 
   <Target Name="Default" DependsOnTargets="Compile; Specs; Package" />

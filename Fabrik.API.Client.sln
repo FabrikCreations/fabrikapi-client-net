@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client.Core", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client.Core.Specs", "src\Specs\Fabrik.API.Client.Core.Specs\Fabrik.API.Client.Core.Specs.csproj", "{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrik.API.Client.MvcHelpers", "src\Fabrik.API.Client.MvcHelpers\Fabrik.API.Client.MvcHelpers.csproj", "{8C459E85-9112-4B3E-BB1C-2866261089A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD77FAB4-E4D6-4EBD-B926-6423E358E6C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C459E85-9112-4B3E-BB1C-2866261089A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C459E85-9112-4B3E-BB1C-2866261089A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C459E85-9112-4B3E-BB1C-2866261089A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C459E85-9112-4B3E-BB1C-2866261089A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

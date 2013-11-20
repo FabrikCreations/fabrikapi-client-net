@@ -1,5 +1,5 @@
 ﻿using Fabrik.API.Common;
-using Fabrik.CMS.API.Common;
+using Fabrik.API.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

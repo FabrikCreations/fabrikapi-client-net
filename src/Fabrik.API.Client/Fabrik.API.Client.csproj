@@ -32,12 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fabrik.CMS.API.Common">
-      <HintPath>..\..\lib\Fabrik.CMS.API.Common.dll</HintPath>
+    <Reference Include="Fabrik.API.Core">
+      <HintPath>..\..\packages\Fabrik.API.Core.0.0.1-pre\lib\net45\Fabrik.API.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fabrik.Common, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fabrik.Common, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Fabrik.Common.1.0.3-pre\lib\net40\Fabrik.Common.dll</HintPath>
+      <HintPath>..\..\packages\Fabrik.Common.1.0.7-pre\lib\net40\Fabrik.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

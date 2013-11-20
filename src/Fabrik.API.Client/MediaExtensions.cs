@@ -1,4 +1,4 @@
-﻿using Fabrik.CMS.API.Common;
+﻿using Fabrik.API.Core;
 using Fabrik.Common;
 
 namespace Fabrik.API.Client

@@ -14,12 +14,10 @@
     <copyright>Copyright 2013 Fabrik Creations</copyright>
     <tags>fabrik apiclient</tags>
     <dependencies>
-      <dependency id="Fabrik.API.Client.Core" />
-      <dependency id="Fabrik.Common" />
       <dependency id="Microsoft.AspNet.WebApi.Core" />
+      <dependency id="Fabrik.Common" />
+      <dependency id="Fabrik.API.Core" />
+      <dependency id="Fabrik.API.Client.Core" />
     </dependencies>
   </metadata>
-  <files>
-    <file src="..\..\lib\Fabrik.CMS.API.Common.dll" target="lib\net45" />
-  </files>
 </package>

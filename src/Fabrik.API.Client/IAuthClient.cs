@@ -1,4 +1,4 @@
-﻿using Fabrik.CMS.API.Common;
+﻿using Fabrik.API.Core;
 using System.Threading.Tasks;
 
 namespace Fabrik.API.Client

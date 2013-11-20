@@ -10,6 +10,7 @@
     <description>$description$</description>
     <licenseUrl>https://raw.github.com/FabrikCreations/fabrikapi-client-net/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/FabrikCreations/fabrikapi-client-net</projectUrl>
+    <iconUrl>https://raw.github.com/FabrikCreations/fabrikapi-client-net/master/src/Common/nuget-icon-32.png</iconUrl>
     <copyright>Copyright 2013 Fabrik Creations</copyright>
     <tags>fabrik apiclient</tags>
     <dependencies>

@@ -1,5 +1,4 @@
-﻿using Fabrik.API.Common;
-using Fabrik.API.Core;
+﻿using Fabrik.API.Core;
 using Fabrik.Common;
 using System.Collections.Generic;
 using System.Linq;

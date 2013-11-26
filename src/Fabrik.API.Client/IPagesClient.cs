@@ -1,5 +1,4 @@
-﻿using Fabrik.API.Common;
-using Fabrik.API.Core;
+﻿using Fabrik.API.Core;
 using System.Threading.Tasks;
 
 namespace Fabrik.API.Client

@@ -8,31 +8,31 @@ namespace Fabrik.API.Client
     {
         // Projects
 
-        Task<PagedResult<Project>> GetProjectsAsync(int siteId, int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null);
-        Task<Project> GetProjectAsync(int siteId, int projectId);
-        Task<Project> AddProjectAsync(int siteId, AddProjectCommand command);
-        Task UpdateProjectAsync(int siteId, int projectId, UpdateProjectCommand command);
-        Task DeleteProjectAsync(int siteId, int projectId);
-        Task MoveProjectAsync(int siteId, MoveProjectCommand command);
+        Task<PagedResult<Project>> GetProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null);
+        Task<Project> GetProjectAsync(int projectId);
+        Task<Project> AddProjectAsync(AddProjectCommand command);
+        Task UpdateProjectAsync(int projectId, UpdateProjectCommand command);
+        Task DeleteProjectAsync(int projectId);
+        Task MoveProjectAsync(MoveProjectCommand command);
 
         // Project Media
 
-        Task<IEnumerable<MediaItem>> AddProjectMediaAsync(int siteId, int projectId, params AddMediaCommand[] commands);
-        Task UpdateProjectMediaAsync(int siteId, int projectId, int mediaItemId, UpdateMediaCommand command);
-        Task PatchProjectMediaAsync(int siteId, int projectId, PatchMediaCommand command);
-        Task DeleteProjectMediaAsync(int siteId, int projectId, int mediaItemId);
+        Task<IEnumerable<MediaItem>> AddProjectMediaAsync(int projectId, params AddMediaCommand[] commands);
+        Task UpdateProjectMediaAsync(int projectId, int mediaItemId, UpdateMediaCommand command);
+        Task PatchProjectMediaAsync(int projectId, PatchMediaCommand command);
+        Task DeleteProjectMediaAsync(int projectId, int mediaItemId);
 
         // Project Tags
 
-        Task<PagedResult<ProjectTagSummary>> GetTagsAsync(int siteId, string term = null, int? pageSize = null, int? page = null);
-        Task<TaggedResult<Project>> GetProjectsByTagAsync(int siteId, string tag, int? pageSize = null, int? page = null);
+        Task<PagedResult<ProjectTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null);
+        Task<TaggedResult<Project>> GetProjectsByTagAsync(string tag, int? pageSize = null, int? page = null);
 
         // Project Categories
 
-        Task<PagedResult<PortfolioCategory>> GetCategoriesAsync(int siteId, int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null);
-        Task<PortfolioCategory> GetCategoryAsync(int siteId, int categoryId);
-        Task<PortfolioCategory> AddCategoryAsync(int siteId, AddPortfolioCategoryCommand command);
-        Task UpdateCategoryAsync(int siteId, int categoryId, UpdatePortfolioCategoryCommand command);
-        Task DeleteCategoryAsync(int siteId, int categoryId);
+        Task<PagedResult<PortfolioCategory>> GetCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null);
+        Task<PortfolioCategory> GetCategoryAsync(int categoryId);
+        Task<PortfolioCategory> AddCategoryAsync(AddPortfolioCategoryCommand command);
+        Task UpdateCategoryAsync(int categoryId, UpdatePortfolioCategoryCommand command);
+        Task DeleteCategoryAsync(int categoryId);
     }
 }

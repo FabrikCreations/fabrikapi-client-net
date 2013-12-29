@@ -9,17 +9,17 @@ namespace Fabrik.API.Client
 {
     public static class MediaClientExtensions
     {
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, int siteId, params UploadMediaCommand[] commands)
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, params UploadMediaCommand[] commands)
         {
-            return mediaClient.UploadMediaAsync(siteId, null, commands);
+            return mediaClient.UploadMediaAsync(null, commands);
         }
         
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, int siteId, params string[] filePaths)
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, params string[] filePaths)
         {
-            return mediaClient.UploadMediaAsync(siteId, null, filePaths);
+            return mediaClient.UploadMediaAsync(null, filePaths);
         }
         
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, int siteId, string targetPath, params string[] filePaths)
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, string targetPath, params string[] filePaths)
         {
             Ensure.Argument.NotNull(filePaths, "filePaths");
             Ensure.Argument.Is(filePaths.Length > 0, "You must provide at least one file to upload.");
@@ -40,7 +40,7 @@ namespace Fabrik.API.Client
                 });
             }
 
-            return mediaClient.UploadMediaAsync(siteId, targetPath, uploads.ToArray());
+            return mediaClient.UploadMediaAsync(targetPath, uploads.ToArray());
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Fabrik.API.Client
 {
     public interface IMediaClient
     {
-        Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(int siteId, string targetPath, params UploadMediaCommand[] commands);
+        Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(string targetPath, params UploadMediaCommand[] commands);
     }
 }

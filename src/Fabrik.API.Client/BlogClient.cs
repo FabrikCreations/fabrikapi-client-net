@@ -9,14 +9,16 @@ namespace Fabrik.API.Client
     public class BlogClient : IBlogClient
     {
         private readonly ApiClient api;
+        private readonly int siteId;
         
-        public BlogClient(ApiClient apiClient)
+        public BlogClient(ApiClient apiClient, int siteId)
         {
             Ensure.Argument.NotNull(apiClient, "apiClient");
-            api = apiClient;
+            this.api = apiClient;
+            this.siteId = siteId;
         }
 
-        public Task<PagedResult<Post>> GetPostsAsync(int siteId, int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null,
+        public Task<PagedResult<Post>> GetPostsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null,
             bool? includeFuturePosts = null, bool? includeUnpublishedPosts = null)
         {
             var tagString = tags.JoinOrDefault(";");
@@ -25,76 +27,76 @@ namespace Fabrik.API.Client
                 new { pageSize = pageSize, page = page, slug = slug, tags = tagString, term = term, futureposts = includeFuturePosts, unpublished = includeUnpublishedPosts });
         }
 
-        public Task<Post> GetPostAsync(int siteId, int postId)
+        public Task<Post> GetPostAsync(int postId)
         {
-            return api.GetAsync<Post>(GetPostsPath(siteId, postId));
+            return api.GetAsync<Post>(GetPostsPath(postId));
         }
 
-        public Task<Post> AddPostAsync(int siteId, AddPostCommand command)
+        public Task<Post> AddPostAsync(AddPostCommand command)
         {
-            return api.PostAsync<AddPostCommand, Post>(GetPostsPath(siteId), command);
+            return api.PostAsync<AddPostCommand, Post>(GetPostsPath(), command);
         }
 
-        public async Task UpdatePostAsync(int siteId, int postId, UpdatePostCommand command)
+        public async Task UpdatePostAsync(int postId, UpdatePostCommand command)
         {
-            await api.PutAsync(GetPostsPath(siteId, postId), command);
+            await api.PutAsync(GetPostsPath(postId), command);
         }
 
-        public async Task DeletePostAsync(int siteId, int postId)
+        public async Task DeletePostAsync(int postId)
         {
-            await api.DeleteAsync(GetPostsPath(siteId, postId));
+            await api.DeleteAsync(GetPostsPath(postId));
         }
 
-        public Task<MediaItem> AddPostMediaAsync(int siteId, int postId, AddMediaCommand command)
+        public Task<MediaItem> AddPostMediaAsync(int postId, AddMediaCommand command)
         {
-            return api.PostAsync<AddMediaCommand, MediaItem>(GetPostMediaPath(siteId, postId), command);
+            return api.PostAsync<AddMediaCommand, MediaItem>(GetPostMediaPath(postId), command);
         }
 
-        public async Task UpdatePostMediaAsync(int siteId, int postId, int mediaItemId, UpdateMediaCommand command)
+        public async Task UpdatePostMediaAsync(int postId, int mediaItemId, UpdateMediaCommand command)
         {
-            await api.PutAsync(GetPostMediaPath(siteId, postId, mediaItemId), command);
+            await api.PutAsync(GetPostMediaPath(postId, mediaItemId), command);
         }
 
-        public async Task PatchPostMediaAsync(int siteId, int postId, PatchMediaCommand command)
+        public async Task PatchPostMediaAsync(int postId, PatchMediaCommand command)
         {
-            await api.PatchAsync(GetPostMediaPath(siteId, postId), command);
+            await api.PatchAsync(GetPostMediaPath(postId), command);
         }
 
-        public async Task DeletePostMediaAsync(int siteId, int postId, int mediaItemId)
+        public async Task DeletePostMediaAsync(int postId, int mediaItemId)
         {
-            await api.DeleteAsync(GetPostMediaPath(siteId, postId, mediaItemId));
+            await api.DeleteAsync(GetPostMediaPath(postId, mediaItemId));
         }
 
-        public Task<PagedResult<PostArchive>> GetArchivesAsync(int siteId, int? pageSize = null, int? page = null)
+        public Task<PagedResult<PostArchive>> GetArchivesAsync(int? pageSize = null, int? page = null)
         {
-            return api.GetAsync<PagedResult<PostArchive>>(GetArchivesPath(siteId), new { pageSize = pageSize, page = page });
+            return api.GetAsync<PagedResult<PostArchive>>(GetArchivesPath(), new { pageSize = pageSize, page = page });
         }
 
-        public Task<PagedResult<Post>> GetArchivePostsAsync(int siteId, int year, int month, int? pageSize = null, int? page = null)
+        public Task<PagedResult<Post>> GetArchivePostsAsync(int year, int month, int? pageSize = null, int? page = null)
         {
-            return api.GetAsync<PagedResult<Post>>(GetArchivesPath(siteId, year, month), new { pageSize = pageSize, page = page });
+            return api.GetAsync<PagedResult<Post>>(GetArchivesPath(year, month), new { pageSize = pageSize, page = page });
         }
 
-        public Task<PagedResult<PostTagSummary>> GetTagsAsync(int siteId, string term = null, int? pageSize = null, int? page = null)
+        public Task<PagedResult<PostTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null)
         {
-            return api.GetAsync<PagedResult<PostTagSummary>>(GetPostTagsPath(siteId), new { term = term, pageSize = pageSize, page = page });
+            return api.GetAsync<PagedResult<PostTagSummary>>(GetPostTagsPath(), new { term = term, pageSize = pageSize, page = page });
         }
 
-        public async Task<TaggedResult<Post>> GetPostsByTagAsync(int siteId, string tag, int? pageSize = null, int? page = null)
+        public async Task<TaggedResult<Post>> GetPostsByTagAsync(string tag, int? pageSize = null, int? page = null)
         {
             Ensure.Argument.NotNullOrEmpty(tag, "tag");
-            var taggedPosts = await GetPostsAsync(siteId, pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
+            var taggedPosts = await GetPostsAsync(pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
             return TaggedResult<Post>.Create(tag, taggedPosts);
         }
 
-        private string GetBlogPath(int siteId)
+        private string GetBlogPath()
         {
             return "sites/{0}/blog".FormatWith(siteId);
         }
 
-        private string GetPostsPath(int siteId, int? postId = null)
+        private string GetPostsPath(int? postId = null)
         {
-            var postsPath = "{0}/posts".FormatWith(GetBlogPath(siteId));
+            var postsPath = "{0}/posts".FormatWith(GetBlogPath());
 
             if (postId.HasValue)
                 postsPath += "/" + postId;
@@ -102,9 +104,9 @@ namespace Fabrik.API.Client
             return postsPath;
         }
 
-        private string GetPostMediaPath(int siteId, int postId, int? mediaItemId = null)
+        private string GetPostMediaPath(int postId, int? mediaItemId = null)
         {
-            var postMediaPath = "{0}/media".FormatWith(GetPostsPath(siteId, postId));
+            var postMediaPath = "{0}/media".FormatWith(GetPostsPath(postId));
 
             if (mediaItemId.HasValue)
                 postMediaPath += "/" + mediaItemId;
@@ -112,9 +114,9 @@ namespace Fabrik.API.Client
             return postMediaPath;
         }
 
-        private string GetArchivesPath(int siteId, int? year = null, int? month = null)
+        private string GetArchivesPath(int? year = null, int? month = null)
         {
-            var archivesPath = "{0}/archives".FormatWith(GetBlogPath(siteId));
+            var archivesPath = "{0}/archives".FormatWith(GetBlogPath());
 
             if (year.HasValue && month.HasValue)
                 archivesPath += "/{1}/{2}".FormatWith(year.Value, month.Value);
@@ -122,9 +124,9 @@ namespace Fabrik.API.Client
             return archivesPath;
         }
 
-        private string GetPostTagsPath(int siteId)
+        private string GetPostTagsPath()
         {
-            return "{0}/tags".FormatWith(GetBlogPath(siteId));
+            return "{0}/tags".FormatWith(GetBlogPath());
         }
     }
 }

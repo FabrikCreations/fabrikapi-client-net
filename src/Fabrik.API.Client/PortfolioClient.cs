@@ -9,17 +9,19 @@ namespace Fabrik.API.Client
     public class PortfolioClient : IPortfolioClient
     {
         private readonly ApiClient api;
+        private readonly int siteId;
         
-        public PortfolioClient(ApiClient apiClient)
+        public PortfolioClient(ApiClient apiClient, int siteId)
         {
             Ensure.Argument.NotNull(apiClient, "apiClient");
-            api = apiClient;
+            this.api = apiClient;
+            this.siteId = siteId;
         }
         
-        public Task<PagedResult<Project>> GetProjectsAsync(int siteId, int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null)
+        public Task<PagedResult<Project>> GetProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null)
         {
             var tagString = tags.JoinOrDefault(";");
-            return api.GetAsync<PagedResult<Project>>(GetProjectsPath(siteId), new { 
+            return api.GetAsync<PagedResult<Project>>(GetProjectsPath(), new { 
                 pageSize = pageSize, 
                 page = page, 
                 slug = slug, 
@@ -31,96 +33,96 @@ namespace Fabrik.API.Client
             });
         }
 
-        public Task<Project> GetProjectAsync(int siteId, int projectId)
+        public Task<Project> GetProjectAsync(int projectId)
         {
-            return api.GetAsync<Project>(GetProjectsPath(siteId, projectId));
+            return api.GetAsync<Project>(GetProjectsPath(projectId));
         }
 
-        public Task<Project> AddProjectAsync(int siteId, AddProjectCommand command)
+        public Task<Project> AddProjectAsync(AddProjectCommand command)
         {
-            return api.PostAsync<AddProjectCommand, Project>(GetProjectsPath(siteId), command);
+            return api.PostAsync<AddProjectCommand, Project>(GetProjectsPath(), command);
         }
 
-        public async Task UpdateProjectAsync(int siteId, int projectId, UpdateProjectCommand command)
+        public async Task UpdateProjectAsync(int projectId, UpdateProjectCommand command)
         {
-            await api.PutAsync(GetProjectsPath(siteId, projectId), command);
+            await api.PutAsync(GetProjectsPath(projectId), command);
         }
 
-        public async Task DeleteProjectAsync(int siteId, int projectId)
+        public async Task DeleteProjectAsync(int projectId)
         {
-            await api.DeleteAsync(GetProjectsPath(siteId, projectId));
+            await api.DeleteAsync(GetProjectsPath(projectId));
         }
 
-        public async Task MoveProjectAsync(int siteId, MoveProjectCommand command)
+        public async Task MoveProjectAsync(MoveProjectCommand command)
         {
-            await api.PutAsync(GetPortfolioPath(siteId), command);
+            await api.PutAsync(GetPortfolioPath(), command);
         }
 
-        public Task<IEnumerable<MediaItem>> AddProjectMediaAsync(int siteId, int projectId, params AddMediaCommand[] commands)
+        public Task<IEnumerable<MediaItem>> AddProjectMediaAsync(int projectId, params AddMediaCommand[] commands)
         {
-            return api.PostAsync<IEnumerable<AddMediaCommand>, IEnumerable<MediaItem>>(GetProjectMediaPath(siteId, projectId), commands);
+            return api.PostAsync<IEnumerable<AddMediaCommand>, IEnumerable<MediaItem>>(GetProjectMediaPath(projectId), commands);
         }
 
-        public async Task UpdateProjectMediaAsync(int siteId, int projectId, int mediaItemId, UpdateMediaCommand command)
+        public async Task UpdateProjectMediaAsync(int projectId, int mediaItemId, UpdateMediaCommand command)
         {
-            await api.PutAsync(GetProjectMediaPath(siteId, projectId, mediaItemId), command);
+            await api.PutAsync(GetProjectMediaPath(projectId, mediaItemId), command);
         }
 
-        public async Task PatchProjectMediaAsync(int siteId, int projectId, PatchMediaCommand command)
+        public async Task PatchProjectMediaAsync(int projectId, PatchMediaCommand command)
         {
-            await api.PatchAsync(GetProjectMediaPath(siteId, projectId), command);
+            await api.PatchAsync(GetProjectMediaPath(projectId), command);
         }
 
-        public async Task DeleteProjectMediaAsync(int siteId, int projectId, int mediaItemId)
+        public async Task DeleteProjectMediaAsync(int projectId, int mediaItemId)
         {
-            await api.DeleteAsync(GetProjectMediaPath(siteId, projectId, mediaItemId));
+            await api.DeleteAsync(GetProjectMediaPath(projectId, mediaItemId));
         }
 
-        public Task<PagedResult<ProjectTagSummary>> GetTagsAsync(int siteId, string term = null, int? pageSize = null, int? page = null)
+        public Task<PagedResult<ProjectTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null)
         {
-            return api.GetAsync<PagedResult<ProjectTagSummary>>(GetProjectTagsPath(siteId), new { term = term, pageSize = pageSize, page = page });
+            return api.GetAsync<PagedResult<ProjectTagSummary>>(GetProjectTagsPath(), new { term = term, pageSize = pageSize, page = page });
         }
 
-        public async Task<TaggedResult<Project>> GetProjectsByTagAsync(int siteId, string tag, int? pageSize = null, int? page = null)
+        public async Task<TaggedResult<Project>> GetProjectsByTagAsync(string tag, int? pageSize = null, int? page = null)
         {
             Ensure.Argument.NotNullOrEmpty(tag, "tag");
-            var taggedProjects = await GetProjectsAsync(siteId, pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
+            var taggedProjects = await GetProjectsAsync(pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
             return TaggedResult<Project>.Create(tag, taggedProjects);
         }
 
-        public Task<PagedResult<PortfolioCategory>> GetCategoriesAsync(int siteId, int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null)
+        public Task<PagedResult<PortfolioCategory>> GetCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null)
         {
-            return api.GetAsync<PagedResult<PortfolioCategory>>(GetCategoriesPath(siteId), new { pageSize = pageSize, page = page, parentCategoryId = parentCategoryId, slug = slug });
+            return api.GetAsync<PagedResult<PortfolioCategory>>(GetCategoriesPath(), new { pageSize = pageSize, page = page, parentCategoryId = parentCategoryId, slug = slug });
         }
 
-        public Task<PortfolioCategory> GetCategoryAsync(int siteId, int categoryId)
+        public Task<PortfolioCategory> GetCategoryAsync(int categoryId)
         {
-            return api.GetAsync<PortfolioCategory>(GetCategoriesPath(siteId, categoryId));
+            return api.GetAsync<PortfolioCategory>(GetCategoriesPath(categoryId));
         }
 
-        public Task<PortfolioCategory> AddCategoryAsync(int siteId, AddPortfolioCategoryCommand command)
+        public Task<PortfolioCategory> AddCategoryAsync(AddPortfolioCategoryCommand command)
         {
-            return api.PostAsync<AddPortfolioCategoryCommand, PortfolioCategory>(GetCategoriesPath(siteId), command);
+            return api.PostAsync<AddPortfolioCategoryCommand, PortfolioCategory>(GetCategoriesPath(), command);
         }
 
-        public async Task UpdateCategoryAsync(int siteId, int categoryId, UpdatePortfolioCategoryCommand command)
+        public async Task UpdateCategoryAsync(int categoryId, UpdatePortfolioCategoryCommand command)
         {
-            await api.PutAsync(GetCategoriesPath(siteId, categoryId), command);
+            await api.PutAsync(GetCategoriesPath(categoryId), command);
         }
 
-        public async Task DeleteCategoryAsync(int siteId, int categoryId)
+        public async Task DeleteCategoryAsync(int categoryId)
         {
-            await api.DeleteAsync(GetCategoriesPath(siteId, categoryId));
+            await api.DeleteAsync(GetCategoriesPath(categoryId));
         }
 
-        private string GetPortfolioPath(int siteId)
+        private string GetPortfolioPath()
         {
             return "sites/{0}/portfolio".FormatWith(siteId);
         }
 
-        private string GetProjectsPath(int siteId, int? projectId = null)
+        private string GetProjectsPath(int? projectId = null)
         {
-            var projectsPath = "{0}/projects".FormatWith(GetPortfolioPath(siteId));
+            var projectsPath = "{0}/projects".FormatWith(GetPortfolioPath());
 
             if (projectId.HasValue)
                 projectsPath += "/" + projectId;
@@ -128,9 +130,9 @@ namespace Fabrik.API.Client
             return projectsPath;
         }
 
-        private string GetProjectMediaPath(int siteId, int projectId, int? mediaItemId = null)
+        private string GetProjectMediaPath(int projectId, int? mediaItemId = null)
         {
-            var projectMediaPath = "{0}/media".FormatWith(GetProjectsPath(siteId, projectId));
+            var projectMediaPath = "{0}/media".FormatWith(GetProjectsPath(projectId));
 
             if (mediaItemId.HasValue)
                 projectMediaPath += "/" + mediaItemId;
@@ -138,9 +140,9 @@ namespace Fabrik.API.Client
             return projectMediaPath;
         }
 
-        private string GetCategoriesPath(int siteId, int? categoryId = null)
+        private string GetCategoriesPath(int? categoryId = null)
         {
-            var categoriesPath = "{0}/categories".FormatWith(GetPortfolioPath(siteId));
+            var categoriesPath = "{0}/categories".FormatWith(GetPortfolioPath());
 
             if (categoryId.HasValue)
                 categoriesPath += "/" + categoryId;
@@ -148,9 +150,9 @@ namespace Fabrik.API.Client
             return categoriesPath;
         }
 
-        private string GetProjectTagsPath(int siteId)
+        private string GetProjectTagsPath()
         {
-            return "{0}/tags".FormatWith(GetPortfolioPath(siteId));
+            return "{0}/tags".FormatWith(GetPortfolioPath());
         }
     }
 }

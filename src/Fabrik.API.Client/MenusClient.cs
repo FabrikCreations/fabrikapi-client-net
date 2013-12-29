@@ -9,54 +9,56 @@ namespace Fabrik.API.Client
     public class MenusClient : IMenusClient
     {
         private readonly ApiClient api;
+        private readonly int siteId;
 
-        public MenusClient(ApiClient apiClient)
+        public MenusClient(ApiClient apiClient, int siteId)
         {
             Ensure.Argument.NotNull(apiClient, "apiClient");
-            api = apiClient;
+            this.api = apiClient;
+            this.siteId = siteId;
         }
 
-        public Task<IEnumerable<Menu>> GetMenusAsync(int siteId, string name = null)
+        public Task<IEnumerable<Menu>> GetMenusAsync(string name = null)
         {
-            return api.GetAsync<IEnumerable<Menu>>(GetMenusPath(siteId), new { name = name });
+            return api.GetAsync<IEnumerable<Menu>>(GetMenusPath(), new { name = name });
         }
 
-        public Task<Menu> GetMenuAsync(int siteId, int menuId)
+        public Task<Menu> GetMenuAsync(int menuId)
         {
-            return api.GetAsync<Menu>(GetMenusPath(siteId, menuId));
+            return api.GetAsync<Menu>(GetMenusPath(menuId));
         }
 
-        public Task<Menu> AddMenuAsync(int siteId, AddMenuCommand command)
+        public Task<Menu> AddMenuAsync(AddMenuCommand command)
         {
-            return api.PostAsync<AddMenuCommand, Menu>(GetMenusPath(siteId), command);
+            return api.PostAsync<AddMenuCommand, Menu>(GetMenusPath(), command);
         }
 
-        public async Task DeleteMenuAsync(int siteId, int menuId)
+        public async Task DeleteMenuAsync(int menuId)
         {
-            await api.DeleteAsync(GetMenusPath(siteId, menuId));
+            await api.DeleteAsync(GetMenusPath(menuId));
         }
 
-        public async Task AddMenuItemAsync(int siteId, int menuId, AddMenuItemCommand command)
+        public async Task AddMenuItemAsync(int menuId, AddMenuItemCommand command)
         {
-            await api.PostAsync(GetMenuItemsPath(siteId, menuId), command);
+            await api.PostAsync(GetMenuItemsPath(menuId), command);
         }
 
-        public async Task UpdateMenuItemAsync(int siteId, int menuId, int menuItemId, UpdateMenuItemCommand command)
+        public async Task UpdateMenuItemAsync(int menuId, int menuItemId, UpdateMenuItemCommand command)
         {
-            await api.PutAsync(GetMenuItemsPath(siteId, menuId, menuItemId), command);
+            await api.PutAsync(GetMenuItemsPath(menuId, menuItemId), command);
         }
 
-        public async Task MoveMenuItemAsync(int siteId, int menuId, MoveMenuItemCommand command)
+        public async Task MoveMenuItemAsync(int menuId, MoveMenuItemCommand command)
         {
-            await api.PatchAsync(GetMenuItemsPath(siteId, menuId), command);
+            await api.PatchAsync(GetMenuItemsPath(menuId), command);
         }
 
-        public async Task DeleteMenuItemAsync(int siteId, int menuId, int id)
+        public async Task DeleteMenuItemAsync(int menuId, int id)
         {
-            await api.DeleteAsync(GetMenuItemsPath(siteId, menuId, id));
+            await api.DeleteAsync(GetMenuItemsPath(menuId, id));
         }
 
-        private string GetMenusPath(int siteId, int? menuId = null)
+        private string GetMenusPath(int? menuId = null)
         {
             var menusPath = "sites/{0}/menus".FormatWith(siteId);
 
@@ -66,9 +68,9 @@ namespace Fabrik.API.Client
             return menusPath;
         }
 
-        private string GetMenuItemsPath(int siteId, int menuId, int? id = null)
+        private string GetMenuItemsPath(int menuId, int? id = null)
         {
-            var menuItemsPath = GetMenusPath(siteId, menuId) + "/items";
+            var menuItemsPath = GetMenusPath(menuId) + "/items";
 
             if (id.HasValue)
                 menuItemsPath += "/" + id;

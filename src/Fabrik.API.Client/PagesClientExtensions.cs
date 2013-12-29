@@ -7,10 +7,10 @@ namespace Fabrik.API.Client
 {
     public static class PagesClientExtensions
     {
-        public static async Task<Page> GetPageBySlugAsync(this IPagesClient client, int siteId, string slug)
+        public static async Task<Page> GetPageBySlugAsync(this IPagesClient client, string slug)
         {
             Ensure.Argument.NotNullOrEmpty(slug, "slug");
-            var pages = await client.GetPagesAsync(siteId, slug: slug).ConfigureAwait(false);
+            var pages = await client.GetPagesAsync(slug: slug).ConfigureAwait(false);
             return pages.Items.FirstOrDefault();
         }
     }

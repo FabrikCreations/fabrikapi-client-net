@@ -6,11 +6,11 @@ namespace Fabrik.API.Client
 {
     public interface ICustomizationClient
     {
-        Task<IEnumerable<ThemeSummary>> GetThemesAsync(int siteId);
-        Task<Theme> GetThemeAsync(int siteId, int themeId);
-        Task ApplyThemeAsync(int siteId, ApplyThemeCommand command);
-        Task<ThemeConfiguration> GetThemeConfigurationAsync(int siteId, int themeId);
-        Task UpdateThemeConfigurationAsync(int siteId, int themeId, UpdateThemeConfigurationCommand command);
-        Task DeleteThemeConfigurationAsync(int siteId, int themeId);
+        Task<IEnumerable<ThemeSummary>> GetThemesAsync();
+        Task<Theme> GetThemeAsync(int themeId);
+        Task ApplyThemeAsync(ApplyThemeCommand command);
+        Task<ThemeConfiguration> GetThemeConfigurationAsync(int themeId);
+        Task UpdateThemeConfigurationAsync(int themeId, UpdateThemeConfigurationCommand command);
+        Task DeleteThemeConfigurationAsync(int themeId);
     }
 }

@@ -9,44 +9,46 @@ namespace Fabrik.API.Client
     public class CustomizationClient : ICustomizationClient
     {
         private readonly ApiClient api;
+        private readonly int siteId;
 
-        public CustomizationClient(ApiClient apiClient)
+        public CustomizationClient(ApiClient apiClient, int siteId)
         {
             Ensure.Argument.NotNull(apiClient, "apiClient");
-            api = apiClient;
+            this.api = apiClient;
+            this.siteId = siteId;
         }
         
-        public Task<IEnumerable<ThemeSummary>> GetThemesAsync(int siteId)
+        public Task<IEnumerable<ThemeSummary>> GetThemesAsync()
         {
-            return api.GetAsync<IEnumerable<ThemeSummary>>(GetThemesPath(siteId));
+            return api.GetAsync<IEnumerable<ThemeSummary>>(GetThemesPath());
         }
 
-        public Task<Theme> GetThemeAsync(int siteId, int themeId)
+        public Task<Theme> GetThemeAsync(int themeId)
         {
-            return api.GetAsync<Theme>(GetThemesPath(siteId, themeId));
+            return api.GetAsync<Theme>(GetThemesPath(themeId));
         }
 
-        public async Task ApplyThemeAsync(int siteId, ApplyThemeCommand command)
+        public async Task ApplyThemeAsync(ApplyThemeCommand command)
         {
-            await api.PostAsync(GetThemesPath(siteId), command);
+            await api.PostAsync(GetThemesPath(), command);
         }
 
-        public Task<ThemeConfiguration> GetThemeConfigurationAsync(int siteId, int themeId)
+        public Task<ThemeConfiguration> GetThemeConfigurationAsync(int themeId)
         {
-            return api.GetAsync<ThemeConfiguration>(GetThemeConfigurationPath(siteId, themeId));
+            return api.GetAsync<ThemeConfiguration>(GetThemeConfigurationPath(themeId));
         }
 
-        public async Task UpdateThemeConfigurationAsync(int siteId, int themeId, UpdateThemeConfigurationCommand command)
+        public async Task UpdateThemeConfigurationAsync(int themeId, UpdateThemeConfigurationCommand command)
         {
-            await api.PostAsync(GetThemeConfigurationPath(siteId, themeId), command);
+            await api.PostAsync(GetThemeConfigurationPath(themeId), command);
         }
 
-        public async Task DeleteThemeConfigurationAsync(int siteId, int themeId)
+        public async Task DeleteThemeConfigurationAsync(int themeId)
         {
-            await api.DeleteAsync(GetThemeConfigurationPath(siteId, themeId));
+            await api.DeleteAsync(GetThemeConfigurationPath(themeId));
         }
 
-        private string GetThemesPath(int siteId, int? themeId = null)
+        private string GetThemesPath(int? themeId = null)
         {
             var themesPath = "sites/{0}/themes".FormatWith(siteId);
 
@@ -56,9 +58,9 @@ namespace Fabrik.API.Client
             return themesPath;
         }
 
-        private string GetThemeConfigurationPath(int siteId, int themeId)
+        private string GetThemeConfigurationPath(int themeId)
         {
-            return GetThemesPath(siteId, themeId) + "/configuration";
+            return GetThemesPath(themeId) + "/configuration";
         }
     }
 }

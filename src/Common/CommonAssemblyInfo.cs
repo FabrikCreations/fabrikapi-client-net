@@ -4,12 +4,12 @@ using System.Reflection;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyCompany("Fabrik Creations")]
-[assembly: AssemblyCopyright("Copyright © Fabrik Creations 2013")]
+[assembly: AssemblyCopyright("Copyright © Fabrik Creations 2014")]
 
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyConfiguration("")]
 
-[assembly: AssemblyVersion("0.0.8.0")]
-[assembly: AssemblyFileVersion("0.0.8.0")]
-[assembly: AssemblyInformationalVersion("0.0.8-pre")]
+[assembly: AssemblyVersion("0.0.9.0")]
+[assembly: AssemblyFileVersion("0.0.9.0")]
+[assembly: AssemblyInformationalVersion("0.0.9-pre")]

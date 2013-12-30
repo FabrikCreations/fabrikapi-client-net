@@ -20,7 +20,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
 
-        public async Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(string targetPath, params UploadMediaCommand[] commands)
+        public async Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(string targetPath = null, params UploadMediaCommand[] commands)
         {
             Ensure.Argument.NotNull(commands, "commands");
             Ensure.Argument.Is(commands.Length > 0, "You must provide at least one file to upload.");

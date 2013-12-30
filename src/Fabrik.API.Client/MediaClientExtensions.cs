@@ -9,17 +9,12 @@ namespace Fabrik.API.Client
 {
     public static class MediaClientExtensions
     {
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, params UploadMediaCommand[] commands)
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient client, params string[] targetPaths)
         {
-            return mediaClient.UploadMediaAsync(null, commands);
+            return client.UploadMediaAsync(null, targetPaths);
         }
         
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, params string[] filePaths)
-        {
-            return mediaClient.UploadMediaAsync(null, filePaths);
-        }
-        
-        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient mediaClient, string targetPath, params string[] filePaths)
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient client, string targetPath, params string[] filePaths)
         {
             Ensure.Argument.NotNull(filePaths, "filePaths");
             Ensure.Argument.Is(filePaths.Length > 0, "You must provide at least one file to upload.");
@@ -40,7 +35,7 @@ namespace Fabrik.API.Client
                 });
             }
 
-            return mediaClient.UploadMediaAsync(targetPath, uploads.ToArray());
+            return client.UploadMediaAsync(targetPath, uploads.ToArray());
         }
     }
 }

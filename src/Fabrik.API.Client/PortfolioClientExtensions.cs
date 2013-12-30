@@ -15,12 +15,12 @@ namespace Fabrik.API.Client
             return projects.Items.FirstOrDefault();
         }
 
-        public static Task<PagedResult<Project>> GetProjectsByCategoryAsync(this IPortfolioClient client, int categoryId, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
+        public static Task<PagedResult<Project>> ListProjectsByCategoryAsync(this IPortfolioClient client, int categoryId, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
         {
             return client.ListProjectsAsync(categoryId: categoryId, tags: tags, pageSize: pageSize, page: page);
         }
 
-        public static Task<PagedResult<Project>> GetProjectsByCategoryAsync(this IPortfolioClient client, string categorySlug, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
+        public static Task<PagedResult<Project>> ListProjectsByCategoryAsync(this IPortfolioClient client, string categorySlug, IEnumerable<string> tags = null, int? pageSize = null, int? page = null)
         {
             Ensure.Argument.NotNull(categorySlug);
 

@@ -6,7 +6,7 @@ namespace Fabrik.API.Client
 {
     public interface ICustomizationClient
     {
-        Task<IEnumerable<ThemeSummary>> GetThemesAsync();
+        Task<IEnumerable<ThemeSummary>> ListThemesAsync();
         Task<Theme> GetThemeAsync(int themeId);
         Task ApplyThemeAsync(ApplyThemeCommand command);
         Task<ThemeConfiguration> GetThemeConfigurationAsync(int themeId);

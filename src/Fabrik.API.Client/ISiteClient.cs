@@ -6,7 +6,7 @@ namespace Fabrik.API.Client
 {
     public interface ISiteClient
     {
-        Task<IEnumerable<Site>> GetSitesAsync();
+        Task<IEnumerable<Site>> ListSitesAsync();
         Task<Site> GetSiteAsync(int siteId);
         
         // Url Mappings        

@@ -16,7 +16,7 @@ namespace Fabrik.API.Client
             api = apiClient;
         }
 
-        public Task<IEnumerable<Site>> GetSitesAsync()
+        public Task<IEnumerable<Site>> ListSitesAsync()
         {
             return api.GetAsync<IEnumerable<Site>>(GetSitesPath());
         }

@@ -18,7 +18,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
 
-        public Task<IEnumerable<Menu>> GetMenusAsync(string name = null)
+        public Task<IEnumerable<Menu>> ListMenusAsync(string name = null)
         {
             return api.GetAsync<IEnumerable<Menu>>(GetMenusPath(), new { name = name });
         }

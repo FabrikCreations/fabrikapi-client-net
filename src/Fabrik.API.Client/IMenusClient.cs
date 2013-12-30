@@ -6,7 +6,7 @@ namespace Fabrik.API.Client
 {
     public interface IMenusClient
     {
-        Task<IEnumerable<Menu>> GetMenusAsync(string name = null);
+        Task<IEnumerable<Menu>> ListMenusAsync(string name = null);
         Task<Menu> GetMenuAsync(int menuId);
         Task<Menu> AddMenuAsync(AddMenuCommand command);
         Task DeleteMenuAsync(int menuId);

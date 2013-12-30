@@ -8,7 +8,7 @@ namespace Fabrik.API.Client
     {
         // Posts
         
-        Task<PagedResult<Post>> GetPostsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, 
+        Task<PagedResult<Post>> ListPostsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, 
             bool? includeFuturePosts = null, bool? includeUnpublishedPosts = null);
         Task<Post> GetPostAsync(int postId);
         Task<Post> AddPostAsync(AddPostCommand command);
@@ -24,12 +24,11 @@ namespace Fabrik.API.Client
 
         // Post Archives
 
-        Task<PagedResult<PostArchive>> GetArchivesAsync(int? pageSize = null, int? page = null);
+        Task<PagedResult<PostArchive>> ListArchivesAsync(int? pageSize = null, int? page = null);
         Task<PagedResult<Post>> GetArchivePostsAsync(int year, int month, int? pageSize = null, int? page = null);
 
         // Post Tags
 
-        Task<PagedResult<PostTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null);
-        Task<TaggedResult<Post>> GetPostsByTagAsync(string tag, int? pageSize = null, int? page = null);
+        Task<PagedResult<PostTagSummary>> ListTagsAsync(string term = null, int? pageSize = null, int? page = null);
     }
 }

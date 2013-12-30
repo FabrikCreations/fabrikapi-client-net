@@ -18,7 +18,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
 
-        public Task<PagedResult<Post>> GetPostsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null,
+        public Task<PagedResult<Post>> ListPostsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null,
             bool? includeFuturePosts = null, bool? includeUnpublishedPosts = null)
         {
             var tagString = tags.JoinOrDefault(";");
@@ -67,7 +67,7 @@ namespace Fabrik.API.Client
             await api.DeleteAsync(GetPostMediaPath(postId, mediaItemId));
         }
 
-        public Task<PagedResult<PostArchive>> GetArchivesAsync(int? pageSize = null, int? page = null)
+        public Task<PagedResult<PostArchive>> ListArchivesAsync(int? pageSize = null, int? page = null)
         {
             return api.GetAsync<PagedResult<PostArchive>>(GetArchivesPath(), new { pageSize = pageSize, page = page });
         }
@@ -77,16 +77,9 @@ namespace Fabrik.API.Client
             return api.GetAsync<PagedResult<Post>>(GetArchivesPath(year, month), new { pageSize = pageSize, page = page });
         }
 
-        public Task<PagedResult<PostTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null)
+        public Task<PagedResult<PostTagSummary>> ListTagsAsync(string term = null, int? pageSize = null, int? page = null)
         {
             return api.GetAsync<PagedResult<PostTagSummary>>(GetPostTagsPath(), new { term = term, pageSize = pageSize, page = page });
-        }
-
-        public async Task<TaggedResult<Post>> GetPostsByTagAsync(string tag, int? pageSize = null, int? page = null)
-        {
-            Ensure.Argument.NotNullOrEmpty(tag, "tag");
-            var taggedPosts = await GetPostsAsync(pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
-            return TaggedResult<Post>.Create(tag, taggedPosts);
         }
 
         private string GetBlogPath()

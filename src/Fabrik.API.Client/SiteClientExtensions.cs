@@ -8,7 +8,7 @@ namespace Fabrik.API.Client
     {
         public static async Task<Site> GetDefaultSiteAsync(this ISiteClient client)
         {
-            var sites = await client.GetSitesAsync();
+            var sites = await client.ListSitesAsync();
             return sites.FirstOrDefault();
         }
     }

@@ -18,7 +18,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
         
-        public Task<PagedResult<Project>> GetProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null)
+        public Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null)
         {
             var tagString = tags.JoinOrDefault(";");
             return api.GetAsync<PagedResult<Project>>(GetProjectsPath(), new { 
@@ -78,19 +78,12 @@ namespace Fabrik.API.Client
             await api.DeleteAsync(GetProjectMediaPath(projectId, mediaItemId));
         }
 
-        public Task<PagedResult<ProjectTagSummary>> GetTagsAsync(string term = null, int? pageSize = null, int? page = null)
+        public Task<PagedResult<ProjectTagSummary>> ListTagsAsync(string term = null, int? pageSize = null, int? page = null)
         {
             return api.GetAsync<PagedResult<ProjectTagSummary>>(GetProjectTagsPath(), new { term = term, pageSize = pageSize, page = page });
         }
 
-        public async Task<TaggedResult<Project>> GetProjectsByTagAsync(string tag, int? pageSize = null, int? page = null)
-        {
-            Ensure.Argument.NotNullOrEmpty(tag, "tag");
-            var taggedProjects = await GetProjectsAsync(pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
-            return TaggedResult<Project>.Create(tag, taggedProjects);
-        }
-
-        public Task<PagedResult<PortfolioCategory>> GetCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null)
+        public Task<PagedResult<PortfolioCategory>> ListCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null)
         {
             return api.GetAsync<PagedResult<PortfolioCategory>>(GetCategoriesPath(), new { pageSize = pageSize, page = page, parentCategoryId = parentCategoryId, slug = slug });
         }

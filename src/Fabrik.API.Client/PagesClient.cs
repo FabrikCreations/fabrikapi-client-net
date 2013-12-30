@@ -17,7 +17,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
 
-        public Task<PagedResult<Page>> GetPagesAsync(int? pageSize = null, int? page = null, string slug = null, bool? includeUnpublishedPages = null)
+        public Task<PagedResult<Page>> ListPagesAsync(int? pageSize = null, int? page = null, string slug = null, bool? includeUnpublishedPages = null)
         {
             return api.GetAsync<PagedResult<Page>>(GetPagesPath(), new { pageSize = pageSize, page = page, slug = slug, unpublished = includeUnpublishedPages });
         }

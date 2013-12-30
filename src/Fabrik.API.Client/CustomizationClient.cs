@@ -18,7 +18,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
         
-        public Task<IEnumerable<ThemeSummary>> GetThemesAsync()
+        public Task<IEnumerable<ThemeSummary>> ListThemesAsync()
         {
             return api.GetAsync<IEnumerable<ThemeSummary>>(GetThemesPath());
         }

@@ -73,11 +73,10 @@ All API operations are asynchronous, returning `Task` or `Task<T>`.
 	            var site = await api.GetSiteClient().GetDefaultSite();
 	            
 	            // Get an IBlogClient instance so we can work with our Fabrik Blog
-	            var blog = api.GetBlogClient();
+	            var blog = api.GetBlogClient(site.Id);
 	
 				// all async baby!
 	            var result = await blog.GetPostsAsync(
-	                siteId: site.Id,
 	                tags: new[] { "Fabrik" },
 	                pageSize: 20
 	            );

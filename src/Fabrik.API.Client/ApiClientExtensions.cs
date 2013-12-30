@@ -4,9 +4,9 @@ namespace Fabrik.API.Client
 {
     public static class ApiClientExtensions
     {
-        public static ISiteClient GetSiteClient(this ApiClient apiClient)
+        public static ISiteClient GetSiteClient(this ApiClient apiClient, int siteId)
         {
-            return new SiteClient(apiClient);
+            return new SiteClient(apiClient, siteId);
         }
 
         public static IBlogClient GetBlogClient(this ApiClient apiClient, int siteId)
@@ -42,6 +42,11 @@ namespace Fabrik.API.Client
         public static ICustomizationClient GetCustomizationClient(this ApiClient apiClient, int siteId)
         {
             return new CustomizationClient(apiClient, siteId);
+        }
+
+        public static IAccountClient GetAccountClient(this ApiClient apiClient)
+        {
+            return new AccountClient(apiClient);
         }
     }
 }

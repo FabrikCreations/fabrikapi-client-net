@@ -9,73 +9,103 @@ namespace Fabrik.API.Client
     public class SiteClient : ISiteClient
     {
         private readonly ApiClient api;
+        private readonly int siteId;
 
-        public SiteClient(ApiClient apiClient)
+        public SiteClient(ApiClient apiClient, int siteId)
         {
             Ensure.Argument.NotNull(apiClient, "apiClient");
-            api = apiClient;
+            this.api = apiClient;
+            this.siteId = siteId;
         }
 
-        public Task<IEnumerable<Site>> ListSitesAsync()
+        public Task<Site> GetSiteAsync()
         {
-            return api.GetAsync<IEnumerable<Site>>(GetSitesPath());
+            return api.GetAsync<Site>(GetSitePath());
         }
 
-        public Task<Site> GetSiteAsync(int siteId)
+        // Site URLs
+
+        public Task<UrlMapping> MapUrlAsync(MapUrlCommand command)
         {
-            return api.GetAsync<Site>(GetSitesPath(siteId));
+            return api.PostAsync<MapUrlCommand, UrlMapping>(GetSiteUrlsPath(), command);
         }
 
-        public Task<UrlMapping> MapUrlAsync(int siteId, MapUrlCommand command)
+        public async Task MakeUrlPrimaryAsync(MakeUrlPrimaryCommand command)
         {
-            return api.PostAsync<MapUrlCommand, UrlMapping>(GetSiteUrlsPath(siteId), command);
+            await api.PatchAsync(GetSiteUrlsPath(), command);
         }
 
-        public async Task MakeUrlPrimaryAsync(int siteId, MakeUrlPrimaryCommand command)
+        public async Task RemoveUrlAsync(int urlMappingId)
         {
-            await api.PatchAsync(GetSiteUrlsPath(siteId), command);
+            await api.DeleteAsync(GetSiteUrlsPath(urlMappingId));
         }
 
-        public async Task RemoveUrlAsync(int siteId, int urlMappingId)
+        // Site Settings
+
+        public Task<SiteSettings> GetSiteSettingsAsync()
         {
-            await api.DeleteAsync(GetSiteUrlsPath(siteId, urlMappingId));
+            return api.GetAsync<SiteSettings>(GetSiteSettingsPath());
         }
 
-
-        public Task<SiteSettings> GetSiteSettingsAsync(int siteId)
+        public Task UpdateSiteSettingsAsync(UpdateSiteSettingsCommand command)
         {
-            return api.GetAsync<SiteSettings>(GetSiteSettingsPath(siteId));
+            return api.PutAsync(GetSiteSettingsPath(), command);
         }
 
-        public Task UpdateSiteSettingsAsync(int siteId, UpdateSiteSettingsCommand command)
+        // Site Redirect Rules
+
+        public Task<IEnumerable<RedirectRule>> ListRedirectsAsync()
         {
-            return api.PutAsync(GetSiteSettingsPath(siteId), command);
+            return api.GetAsync<IEnumerable<RedirectRule>>(GetSiteRedirectsPath());
         }
 
-        private string GetSitesPath(int? siteId = null)
+        public Task<RedirectRule> GetRedirectAsync(int redirectId)
         {
-            var sitesPath = "sites";
-            
-            if (siteId.HasValue)
-                sitesPath += "/" + siteId;
-
-
-            return sitesPath;
+            return api.GetAsync<RedirectRule>(GetSiteRedirectsPath(redirectId));
         }
 
-        private string GetSiteUrlsPath(int siteId, int? urlMappingId = null)
+        public Task<RedirectRule> AddRedirectAsync(AddRedirectRuleCommand command)
         {
-            var urlsPath = string.Concat(GetSitesPath(siteId), "/urls");
+            return api.PostAsync<AddRedirectRuleCommand, RedirectRule>(GetSiteRedirectsPath(), command);
+        }
+
+        public async Task DeleteRedirectAsync(int redirectId)
+        {
+            await api.DeleteAsync(GetSiteRedirectsPath(redirectId));
+        }
+
+        private string GetSitePath()
+        {
+            return "sites/" + siteId;
+        }
+
+        private string GetSiteUrlsPath(int? urlMappingId = null)
+        {
+            var urlsPath = string.Concat(GetSitePath(), "/urls");
 
             if (urlMappingId.HasValue)
+            {
                 urlsPath += "/" + urlMappingId;
+            }
 
             return urlsPath;
         }
 
-        private string GetSiteSettingsPath(int siteId)
+        private string GetSiteRedirectsPath(int? redirectId = null)
         {
-            return string.Concat(GetSitesPath(siteId), "/settings");
+            var redirectsPath = string.Concat(GetSitePath(), "/redirects");
+
+            if (redirectId.HasValue)
+            {
+                redirectsPath += "/" + redirectsPath;
+            }
+
+            return redirectsPath;
+        }
+
+        private string GetSiteSettingsPath()
+        {
+            return string.Concat(GetSitePath(), "/settings");
         }
     }
 }

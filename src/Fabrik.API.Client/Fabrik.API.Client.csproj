@@ -65,11 +65,13 @@
     <Compile Include="..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AccountClient.cs" />
     <Compile Include="ApiClientExtensions.cs" />
     <Compile Include="AuthClient.cs" />
     <Compile Include="BlogClient.cs" />
     <Compile Include="BlogClientExtensions.cs" />
     <Compile Include="CustomizationClient.cs" />
+    <Compile Include="IAccountClient.cs" />
     <Compile Include="IAuthClient.cs" />
     <Compile Include="IBlogClient.cs" />
     <Compile Include="ICustomizationClient.cs" />
@@ -90,7 +92,7 @@
     <Compile Include="PortfolioClientExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteClient.cs" />
-    <Compile Include="SiteClientExtensions.cs" />
+    <Compile Include="AccountClientExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

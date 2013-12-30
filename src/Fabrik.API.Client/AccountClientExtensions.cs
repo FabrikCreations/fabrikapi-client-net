@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Fabrik.API.Client
 {
-    public static class SiteClientExtensions
+    public static class AccountClientExtensions
     {
-        public static async Task<Site> GetDefaultSiteAsync(this ISiteClient client)
+        public static async Task<Site> GetDefaultSiteAsync(this IAccountClient client)
         {
             var sites = await client.ListSitesAsync();
             return sites.FirstOrDefault();

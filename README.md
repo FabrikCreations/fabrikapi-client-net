@@ -70,13 +70,13 @@ All API operations are asynchronous, returning `Task` or `Task<T>`.
 	
 	            // Most API calls require a site identifier so we need to get the site first
 	            // If you didn't want to do this every time you could store the siteid in your config file
-	            var site = await api.GetSiteClient().GetDefaultSite();
+	            var site = await api.GetAccountClient().GetDefaultSite();
 	            
 	            // Get an IBlogClient instance so we can work with our Fabrik Blog
 	            var blog = api.GetBlogClient(site.Id);
 	
 				// all async baby!
-	            var result = await blog.GetPostsAsync(
+	            var result = await blog.ListPostsAsync(
 	                tags: new[] { "Fabrik" },
 	                pageSize: 20
 	            );

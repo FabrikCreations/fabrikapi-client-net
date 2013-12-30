@@ -1,0 +1,105 @@
+﻿<h1>Fabrik API Client for .NET</h1>
+
+<p>This client makes it easy to work with the <a href="https://getfabrik.com">Fabrik API</a> from your .NET applications.</p>
+
+<h2>Quick Start</h2>
+
+<pre><code>Install-Package Fabrik.API.Client -pre
+</code></pre>
+
+<p>In order to stay as close to the Fabrik API resource heirarchy as possible, the library follows a "client-per-resource" pattern. For example, to work with your Fabrik Blog content you would create an instance of <code>BlogClient</code>.</p>
+
+<p>All resource clients require an <code>ApiClient</code> instance to communicate with the Fabrik API. The <code>ApiClient</code> provides both code-first and file based configuration:</p>
+
+<p><strong>Code First</strong></p>
+
+<pre><code>var api = ApiClient.Create(cfg =&gt;
+{
+    cfg.ConnectTo("https://api.onfabrik.com");
+    cfg.UseBasicAuthentication("you@domain.com", "YourFabrikPassword");
+});
+</code></pre>
+
+<p><strong>Configuration File</strong></p>
+
+<pre><code>&lt;connectionStrings&gt;
+    &lt;add name="FabrikAPI" 
+         connectionString="Uri=https://api.onfabrik.com;username=you@domain.com;password=YourFabrikPassword"/&gt;
+&lt;/connectionStrings&gt;
+
+var api = ApiClient.FromConnectionString("FabrikAPI");
+</code></pre>
+
+<p>The <code>ApiClient</code> will initialize a <code>HttpClient</code> internally but you can pass your own "provider" if you want to override how the <code>HttpClient</code> is created. This is useful if you want to use the same <code>HttpClient</code> instance throughout your application (best practice) or if you want to set default request headers.</p>
+
+<pre><code>class Program
+{
+    static HttpClient httpClient = new HttpClient();
+
+    static void Main(string[] args)
+    {
+        var api = ApiClient.FromConnectionString("FabrikAPI")
+            .Configure(cfg =&gt; cfg.SetHttpClientProvider(() =&gt; httpClient));
+    }
+}
+</code></pre>
+
+<p>Extension methods are provided for creating resource clients. To create a <code>BlogClient</code> simply call <code>GetBlogClient()</code> on your <code>ApiClient</code> instance.</p>
+
+<p>All API operations are asynchronous, returning <code>Task</code> or <code>Task&lt;T&gt;</code>.</p>
+
+<h2>Example - Querying all blog posts tagged with "Fabrik"</h2>
+
+<pre><code>using Fabrik.API.Client;
+using Fabrik.API.Client.Core;
+using System;
+using System.Threading.Tasks;
+
+namespace FabrikAPIClientDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            new Program().Run().Wait();
+        }
+
+        async Task Run()
+        {
+            var api = ApiClient.Create(cfg =&gt;
+            {
+                cfg.ConnectTo("https://api.onfabrik.com");
+                cfg.UseBasicAuthentication("you@domain.com", "YourFabrikPassword");
+            });
+
+            // Most API calls require a site identifier so we need to get the site first
+            // If you didn't want to do this every time you could store the siteid in your config file
+            var site = await api.GetAccountClient().GetDefaultSite();
+
+            // Get an IBlogClient instance so we can work with our Fabrik Blog
+            var blog = api.GetBlogClient(site.Id);
+
+            // all async baby!
+            var result = await blog.ListPostsAsync(
+                tags: new[] { "Fabrik" },
+                pageSize: 20
+            );
+
+            // Most Get operations return a paged result set
+            Console.WriteLine("We found {0} posts that matched your search.", result.TotalCount);
+
+            // Items returns the underlying items of the paged result set
+            foreach (var post in result.Items)
+            {
+                Console.WriteLine(post.Title);
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+</code></pre>
+
+<h2>License</h2>
+
+<p>Licensed under the MIT License.</p>

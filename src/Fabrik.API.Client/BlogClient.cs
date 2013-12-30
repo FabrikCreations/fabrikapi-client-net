@@ -23,7 +23,7 @@ namespace Fabrik.API.Client
         {
             var tagString = tags.JoinOrDefault(";");
 
-            return api.GetAsync<PagedResult<Post>>(GetPostsPath(siteId),
+            return api.GetAsync<PagedResult<Post>>(GetPostsPath(),
                 new { pageSize = pageSize, page = page, slug = slug, tags = tagString, term = term, futureposts = includeFuturePosts, unpublished = includeUnpublishedPosts });
         }
 

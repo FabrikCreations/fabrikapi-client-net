@@ -13,5 +13,8 @@
     <iconUrl>https://raw.github.com/FabrikCreations/fabrikapi-client-net/master/src/Common/nuget-icon-32.png</iconUrl>
     <copyright>Copyright 2013 Fabrik Creations</copyright>
     <tags>fabrik apiclient</tags>
+    <dependencies>
+      <dependency id="Fabrik.API.Client.Core" version="1.0.10-pre" />
+    </dependencies>
   </metadata>
 </package>

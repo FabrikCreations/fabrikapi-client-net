@@ -9,6 +9,11 @@ namespace Fabrik.API.Client
 {
     public static class MediaClientExtensions
     {
+        public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient client, params UploadMediaCommand[] commands)
+        {
+            return client.UploadMediaAsync(null, commands);
+        }
+
         public static Task<IEnumerable<MediaUploadResult>> UploadMediaAsync(this IMediaClient client, params string[] targetPaths)
         {
             return client.UploadMediaAsync(null, targetPaths);

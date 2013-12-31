@@ -1,4 +1,5 @@
 ﻿using Fabrik.API.Core;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fabrik.API.Client
@@ -15,5 +16,11 @@ namespace Fabrik.API.Client
         // Settings
         Task<SiteSettings> GetSiteSettingsAsync();
         Task UpdateSiteSettingsAsync(UpdateSiteSettingsCommand command);
+
+        // Redirects
+        Task<IEnumerable<RedirectRule>> ListRedirectsAsync();
+        Task<RedirectRule> GetRedirectAsync(int redirectId);
+        Task<RedirectRule> AddRedirectAsync(AddRedirectRuleCommand command);
+        Task DeleteRedirectAsync(int redirectId);
     }
 }

@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fabrik.API.Core, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fabrik.API.Core, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Fabrik.API.Core.0.0.4-pre\lib\net45\Fabrik.API.Core.dll</HintPath>
+      <HintPath>..\..\packages\Fabrik.API.Core.0.0.5-pre\lib\net45\Fabrik.API.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fabrik.Common, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

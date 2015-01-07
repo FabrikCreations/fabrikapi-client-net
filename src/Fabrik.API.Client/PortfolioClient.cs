@@ -55,7 +55,7 @@ namespace Fabrik.API.Client
 
         public async Task MoveProjectAsync(MoveProjectCommand command)
         {
-            await api.PutAsync(GetPortfolioPath(), command);
+            await api.PutAsync(GetRootPortfolioPath(), command);
         }
 
         public Task<IEnumerable<MediaItem>> AddProjectMediaAsync(int projectId, params AddMediaCommand[] commands)
@@ -108,14 +108,44 @@ namespace Fabrik.API.Client
             await api.DeleteAsync(GetCategoriesPath(categoryId));
         }
 
-        private string GetPortfolioPath()
+        public Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null)
+        {
+            return api.GetAsync<PagedResult<Portfolio>>(GetPortfoliosPath(), new { pageSize = pageSize, page = page, parentPortfolioId = parentPortfolioId });
+        }
+
+        public Task<Portfolio> GetPortfolioAsync(int portfolioId)
+        {
+            return api.GetAsync<Portfolio>(GetPortfoliosPath(portfolioId));
+        }
+
+        public Task<Portfolio> GetPortfolioBySlugAsync(string slug)
+        {
+            return api.GetAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug));
+        }
+
+        public Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command)
+        {
+            return api.PostAsync<AddPortfolioCommand, Portfolio>(GetPortfoliosPath(), command);
+        }
+
+        public async Task UpdatePortfolioAsync(int portfolioId, UpdatePortfolioCommand command)
+        {
+            await api.PutAsync(GetPortfoliosPath(portfolioId), command);
+        }
+
+        public async Task DeletePortfolioAsync(int portfolioId)
+        {
+            await api.DeleteAsync(GetPortfoliosPath(portfolioId));
+        }
+
+        private string GetRootPortfolioPath()
         {
             return "sites/{0}/portfolio".FormatWith(siteId);
         }
 
         private string GetProjectsPath(int? projectId = null)
         {
-            var projectsPath = "{0}/projects".FormatWith(GetPortfolioPath());
+            var projectsPath = "{0}/projects".FormatWith(GetRootPortfolioPath());
 
             if (projectId.HasValue)
                 projectsPath += "/" + projectId;
@@ -135,7 +165,7 @@ namespace Fabrik.API.Client
 
         private string GetCategoriesPath(int? categoryId = null)
         {
-            var categoriesPath = "{0}/categories".FormatWith(GetPortfolioPath());
+            var categoriesPath = "{0}/categories".FormatWith(GetRootPortfolioPath());
 
             if (categoryId.HasValue)
                 categoriesPath += "/" + categoryId;
@@ -143,9 +173,19 @@ namespace Fabrik.API.Client
             return categoriesPath;
         }
 
+        private string GetPortfoliosPath(int? portfolioId = null)
+        {
+            var portfoliosPath = "sites/{0}/portfolios".FormatWith(siteId);
+
+            if (portfolioId.HasValue)
+                portfoliosPath += "/" + portfolioId;
+
+            return portfoliosPath;
+        }
+
         private string GetProjectTagsPath()
         {
-            return "{0}/tags".FormatWith(GetPortfolioPath());
+            return "{0}/tags".FormatWith(GetRootPortfolioPath());
         }
     }
 }

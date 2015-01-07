@@ -33,5 +33,14 @@ namespace Fabrik.API.Client
         Task<PortfolioCategory> AddCategoryAsync(AddPortfolioCategoryCommand command);
         Task UpdateCategoryAsync(int categoryId, UpdatePortfolioCategoryCommand command);
         Task DeleteCategoryAsync(int categoryId);
+
+        // Portfolios
+
+        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null);
+        Task<Portfolio> GetPortfolioAsync(int portfolioId);
+        Task<Portfolio> GetPortfolioBySlugAsync(string slug);
+        Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command);
+        Task UpdatePortfolioAsync(int portfolioId, UpdatePortfolioCommand command);
+        Task DeletePortfolioAsync(int portfolioId);
     }
 }

@@ -97,6 +97,11 @@ namespace Fabrik.API.Client
             return api.GetAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug));
         }
 
+        public Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync()
+        {
+            return api.GetAsync<IEnumerable<Portfolio>>("{0}/tree".FormatWith(GetPortfoliosPath()));
+        }
+
         public Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command)
         {
             return api.PostAsync<AddPortfolioCommand, Portfolio>(GetPortfoliosPath(), command);

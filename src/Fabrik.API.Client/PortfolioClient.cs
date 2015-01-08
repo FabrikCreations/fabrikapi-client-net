@@ -37,6 +37,12 @@ namespace Fabrik.API.Client
             return api.GetAsync<Project>(GetProjectsPath(projectId));
         }
 
+        public Task<Project> GetProjectBySlugAsync(string slug)
+        {
+            Ensure.Argument.NotNullOrEmpty("slug", slug);
+            return api.GetAsync<Project>("{0}/byslug/{1}".FormatWith(GetProjectsPath(), slug));
+        }
+
         public Task<Project> AddProjectAsync(AddProjectCommand command)
         {
             return api.PostAsync<AddProjectCommand, Project>(GetProjectsPath(), command);
@@ -124,7 +130,7 @@ namespace Fabrik.API.Client
 
         private string GetProjectsPath(int? projectId = null)
         {
-            var projectsPath = "{0}/projects".FormatWith(GetRootPortfolioPath());
+            var projectsPath = "sites/{0}/projects".FormatWith(siteId);
 
             if (projectId.HasValue)
                 projectsPath += "/" + projectId;

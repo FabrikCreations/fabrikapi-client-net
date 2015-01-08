@@ -10,6 +10,7 @@ namespace Fabrik.API.Client
 
         Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? portfolioId = null, bool? includeUnpublishedProjects = null);
         Task<Project> GetProjectAsync(int projectId);
+        Task<Project> GetProjectBySlugAsync(string slug);
         Task<Project> AddProjectAsync(AddProjectCommand command);
         Task UpdateProjectAsync(int projectId, UpdateProjectCommand command);
         Task DeleteProjectAsync(int projectId);

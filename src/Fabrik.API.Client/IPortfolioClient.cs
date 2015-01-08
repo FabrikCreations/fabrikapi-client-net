@@ -28,7 +28,7 @@ namespace Fabrik.API.Client
 
         // Portfolios
 
-        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null);
+        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null);
         Task<Portfolio> GetPortfolioAsync(int portfolioId);
         Task<Portfolio> GetPortfolioBySlugAsync(string slug);
         Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync();

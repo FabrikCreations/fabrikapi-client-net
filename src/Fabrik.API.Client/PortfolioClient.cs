@@ -18,7 +18,7 @@ namespace Fabrik.API.Client
             this.siteId = siteId;
         }
         
-        public Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null)
+        public Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? portfolioId = null, bool? includeUnpublishedProjects = null)
         {
             var tagString = tags.JoinOrDefault(";");
             return api.GetAsync<PagedResult<Project>>(GetProjectsPath(), new { 
@@ -26,8 +26,7 @@ namespace Fabrik.API.Client
                 page = page, 
                 slug = slug, 
                 tags = tagString, 
-                categoryId = categoryId, 
-                categorySlug = categorySlug,
+                portfolioId = portfolioId,
                 term = term, 
                 unpublished = includeUnpublishedProjects 
             });
@@ -83,31 +82,6 @@ namespace Fabrik.API.Client
             return api.GetAsync<PagedResult<ProjectTagSummary>>(GetProjectTagsPath(), new { term = term, pageSize = pageSize, page = page });
         }
 
-        public Task<PagedResult<PortfolioCategory>> ListCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null)
-        {
-            return api.GetAsync<PagedResult<PortfolioCategory>>(GetCategoriesPath(), new { pageSize = pageSize, page = page, parentCategoryId = parentCategoryId, slug = slug });
-        }
-
-        public Task<PortfolioCategory> GetCategoryAsync(int categoryId)
-        {
-            return api.GetAsync<PortfolioCategory>(GetCategoriesPath(categoryId));
-        }
-
-        public Task<PortfolioCategory> AddCategoryAsync(AddPortfolioCategoryCommand command)
-        {
-            return api.PostAsync<AddPortfolioCategoryCommand, PortfolioCategory>(GetCategoriesPath(), command);
-        }
-
-        public async Task UpdateCategoryAsync(int categoryId, UpdatePortfolioCategoryCommand command)
-        {
-            await api.PutAsync(GetCategoriesPath(categoryId), command);
-        }
-
-        public async Task DeleteCategoryAsync(int categoryId)
-        {
-            await api.DeleteAsync(GetCategoriesPath(categoryId));
-        }
-
         public Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null)
         {
             return api.GetAsync<PagedResult<Portfolio>>(GetPortfoliosPath(), new { pageSize = pageSize, page = page, parentPortfolioId = parentPortfolioId });
@@ -161,16 +135,6 @@ namespace Fabrik.API.Client
                 projectMediaPath += "/" + mediaItemId;
 
             return projectMediaPath;
-        }
-
-        private string GetCategoriesPath(int? categoryId = null)
-        {
-            var categoriesPath = "{0}/categories".FormatWith(GetRootPortfolioPath());
-
-            if (categoryId.HasValue)
-                categoriesPath += "/" + categoryId;
-
-            return categoriesPath;
         }
 
         private string GetPortfoliosPath(int? portfolioId = null)

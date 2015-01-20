@@ -15,6 +15,7 @@ namespace Fabrik.API.Client
         Task UpdateProjectAsync(int projectId, UpdateProjectCommand command);
         Task DeleteProjectAsync(int projectId);
         Task MoveProjectAsync(MoveProjectCommand command);
+        Task MoveProjectAsync(int portfolioId, MoveProjectCommand command);
 
         // Project Media
 

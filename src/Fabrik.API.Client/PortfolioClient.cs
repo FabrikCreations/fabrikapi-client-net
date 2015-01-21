@@ -128,6 +128,16 @@ namespace Fabrik.API.Client
             await api.DeleteAsync(GetPortfoliosPath(portfolioId));
         }
 
+        public async Task MovePortfolioAsync(MovePortfolioCommand command)
+        {
+            await api.PatchAsync(GetRootPortfolioPath() + "/portfolios", command);
+        }
+
+        public async Task MovePortfolioAsync(int portfolioId, MovePortfolioCommand command)
+        {
+            await api.PatchAsync(GetPortfoliosPath(portfolioId) + "/portfolios", command);
+        }
+
         private string GetRootPortfolioPath()
         {
             return "sites/{0}/portfolio".FormatWith(siteId);

@@ -37,5 +37,7 @@ namespace Fabrik.API.Client
         Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command);
         Task UpdatePortfolioAsync(int portfolioId, UpdatePortfolioCommand command);
         Task DeletePortfolioAsync(int portfolioId);
+        Task MovePortfolioAsync(MovePortfolioCommand command);
+        Task MovePortfolioAsync(int portfolioId, MovePortfolioCommand command);
     }
 }

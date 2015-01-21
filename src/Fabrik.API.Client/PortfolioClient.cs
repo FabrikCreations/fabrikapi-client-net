@@ -60,7 +60,7 @@ namespace Fabrik.API.Client
 
         public async Task MoveProjectAsync(MoveProjectCommand command)
         {
-            await api.PatchAsync(GetRootPortfolioPath(), command);
+            await api.PatchAsync(GetRootPortfolioPath() + "/projects", command);
         }
 
         public async Task MoveProjectAsync(int portfolioId, MoveProjectCommand command)

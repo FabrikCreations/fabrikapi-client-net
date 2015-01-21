@@ -30,10 +30,10 @@ namespace Fabrik.API.Client
 
         // Portfolios
 
-        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null);
+        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null, GetPortfoliosCommand.SortByOptions? sortBy = null);
         Task<Portfolio> GetPortfolioAsync(int portfolioId);
         Task<Portfolio> GetPortfolioBySlugAsync(string slug);
-        Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync();
+        Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync(GetPortfolioTreeCommand.SortByOptions? sortBy = null);
         Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command);
         Task UpdatePortfolioAsync(int portfolioId, UpdatePortfolioCommand command);
         Task DeletePortfolioAsync(int portfolioId);

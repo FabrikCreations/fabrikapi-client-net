@@ -8,12 +8,14 @@ namespace Fabrik.API.Client
     {
         // Projects
 
-        Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? categoryId = null, string categorySlug = null, bool? includeUnpublishedProjects = null);
+        Task<PagedResult<Project>> ListProjectsAsync(int? pageSize = null, int? page = null, string slug = null, IEnumerable<string> tags = null, string term = null, int? portfolioId = null, bool? includeUnpublishedProjects = null);
         Task<Project> GetProjectAsync(int projectId);
+        Task<Project> GetProjectBySlugAsync(string slug);
         Task<Project> AddProjectAsync(AddProjectCommand command);
         Task UpdateProjectAsync(int projectId, UpdateProjectCommand command);
         Task DeleteProjectAsync(int projectId);
         Task MoveProjectAsync(MoveProjectCommand command);
+        Task MoveProjectAsync(int portfolioId, MoveProjectCommand command);
 
         // Project Media
 
@@ -26,12 +28,16 @@ namespace Fabrik.API.Client
 
         Task<PagedResult<ProjectTagSummary>> ListTagsAsync(string term = null, int? pageSize = null, int? page = null);
 
-        // Project Categories
+        // Portfolios
 
-        Task<PagedResult<PortfolioCategory>> ListCategoriesAsync(int? pageSize = null, int? page = null, int? parentCategoryId = null, string slug = null);
-        Task<PortfolioCategory> GetCategoryAsync(int categoryId);
-        Task<PortfolioCategory> AddCategoryAsync(AddPortfolioCategoryCommand command);
-        Task UpdateCategoryAsync(int categoryId, UpdatePortfolioCategoryCommand command);
-        Task DeleteCategoryAsync(int categoryId);
+        Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null, GetPortfoliosCommand.SortByOptions? sortBy = null);
+        Task<Portfolio> GetPortfolioAsync(int portfolioId, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null);
+        Task<Portfolio> GetPortfolioBySlugAsync(string slug, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null);
+        Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync(GetPortfolioTreeCommand.SortByOptions? sortBy = null);
+        Task<Portfolio> AddPortfolioAsync(AddPortfolioCommand command);
+        Task UpdatePortfolioAsync(int portfolioId, UpdatePortfolioCommand command);
+        Task DeletePortfolioAsync(int portfolioId);
+        Task MovePortfolioAsync(MovePortfolioCommand command);
+        Task MovePortfolioAsync(int portfolioId, MovePortfolioCommand command);
     }
 }

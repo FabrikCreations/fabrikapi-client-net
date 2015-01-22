@@ -98,14 +98,14 @@ namespace Fabrik.API.Client
             return api.GetAsync<PagedResult<Portfolio>>(GetPortfoliosPath(), new { pageSize = pageSize, page = page, parentPortfolioId = parentPortfolioId, ignoreHeirarchy = ignoreHeirarchy, sortBy = sortBy });
         }
 
-        public Task<Portfolio> GetPortfolioAsync(int portfolioId)
+        public Task<Portfolio> GetPortfolioAsync(int portfolioId, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null)
         {
-            return api.GetAsync<Portfolio>(GetPortfoliosPath(portfolioId));
+            return api.GetAsync<Portfolio>(GetPortfoliosPath(portfolioId), new { sortPortfoliosBy = sortPortfoliosBy });
         }
 
-        public Task<Portfolio> GetPortfolioBySlugAsync(string slug)
+        public Task<Portfolio> GetPortfolioBySlugAsync(string slug, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null)
         {
-            return api.GetAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug));
+            return api.GetAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug), new { sortPortfoliosBy = sortPortfoliosBy });
         }
 
         public Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync(GetPortfolioTreeCommand.SortByOptions? sortBy = null)

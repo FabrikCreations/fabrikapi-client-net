@@ -14,7 +14,7 @@
     <copyright>Copyright 2013 Fabrik Creations</copyright>
     <tags>fabrik apiclient</tags>
     <dependencies>
-      <dependency id="Fabrik.API.Client.Core" version="0.0.24-pre" />
+      <dependency id="Fabrik.API.Client.Core" version="0.0.25-pre" />
     </dependencies>
   </metadata>
 </package>

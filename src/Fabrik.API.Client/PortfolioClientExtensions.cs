@@ -6,10 +6,10 @@ namespace Fabrik.API.Client
 {
     public static class PortfolioClientExtensions
     {
-        public static async Task<TaggedResult<Project>> ListProjectsByTagAsync(this IPortfolioClient client, string tag, int? pageSize = null, int? page = null)
+        public static async Task<TaggedResult<Project>> ListProjectsByTagAsync(this IPortfolioClient client, string tag, int? pageSize = null, int? page = null, int? portfolioId = null)
         {
             Ensure.Argument.NotNullOrEmpty(tag, "tag");
-            var taggedProjects = await client.ListProjectsAsync(pageSize, page, tags: new[] { tag }).ConfigureAwait(false);
+            var taggedProjects = await client.ListProjectsAsync(pageSize, page, tags: new[] { tag }, portfolioId: portfolioId).ConfigureAwait(false);
             return TaggedResult<Project>.Create(tag, taggedProjects);
         }
     }

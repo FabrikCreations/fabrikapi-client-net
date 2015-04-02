@@ -34,13 +34,13 @@ namespace Fabrik.API.Client
 
         public Task<Project> GetProjectAsync(int projectId)
         {
-            return api.GetAsync<Project>(GetProjectsPath(projectId));
+            return api.GetOrDefaultAsync<Project>(GetProjectsPath(projectId));
         }
 
         public Task<Project> GetProjectBySlugAsync(string slug)
         {
             Ensure.Argument.NotNullOrEmpty("slug", slug);
-            return api.GetAsync<Project>("{0}/byslug/{1}".FormatWith(GetProjectsPath(), slug));
+            return api.GetOrDefaultAsync<Project>("{0}/byslug/{1}".FormatWith(GetProjectsPath(), slug));
         }
 
         public Task<Project> AddProjectAsync(AddProjectCommand command)
@@ -100,12 +100,12 @@ namespace Fabrik.API.Client
 
         public Task<Portfolio> GetPortfolioAsync(int portfolioId, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null)
         {
-            return api.GetAsync<Portfolio>(GetPortfoliosPath(portfolioId), new { sortPortfoliosBy = sortPortfoliosBy });
+            return api.GetOrDefaultAsync<Portfolio>(GetPortfoliosPath(portfolioId), new { sortPortfoliosBy = sortPortfoliosBy });
         }
 
         public Task<Portfolio> GetPortfolioBySlugAsync(string slug, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null)
         {
-            return api.GetAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug), new { sortPortfoliosBy = sortPortfoliosBy });
+            return api.GetOrDefaultAsync<Portfolio>("{0}/byslug/{1}".FormatWith(GetPortfoliosPath(), slug), new { sortPortfoliosBy = sortPortfoliosBy });
         }
 
         public Task<IEnumerable<Portfolio>> GetPortfolioTreeAsync(GetPortfolioTreeCommand.SortByOptions? sortBy = null)

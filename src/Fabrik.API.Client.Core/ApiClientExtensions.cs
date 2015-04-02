@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace Fabrik.API.Client.Core
 {
@@ -12,7 +13,7 @@ namespace Fabrik.API.Client.Core
             var response = await client.TryGetAsync<TResult>(relativePath, parameters).ConfigureAwait(false);
 
             if (!response.IsSuccessful)
-            {
+            {               
                 throw new ApiResponseException(response.Error);
             }
 
@@ -69,6 +70,33 @@ namespace Fabrik.API.Client.Core
             {
                 throw new ApiResponseException(response.Error);
             }
+        }
+
+        /// <summary>
+        /// Attempts to GET the resource at the specified <paramref name="relativePath"/>.
+        /// If the response returns 404, <param name="defaultValue"/> is returned, otherwise a <see cref="ApiResponseException"/> is thrown.
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="client"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static async Task<TResult> GetOrDefaultAsync<TResult>(this ApiClient client, string relativePath, object parameters = null, TResult defaultValue = default(TResult))
+        {
+            var response = await client.TryGetAsync<TResult>(relativePath, parameters).ConfigureAwait(false);
+
+            if (!response.IsSuccessful)
+            {
+                // if the response 
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return defaultValue;
+                }
+                
+                throw new ApiResponseException(response.Error);
+            }
+
+            return response.Content;
         }
     }
 }

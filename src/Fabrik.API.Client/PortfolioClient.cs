@@ -93,9 +93,9 @@ namespace Fabrik.API.Client
             return api.GetAsync<PagedResult<ProjectTagSummary>>(GetProjectTagsPath(), new { term = term, pageSize = pageSize, page = page });
         }
 
-        public Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null, GetPortfoliosCommand.SortByOptions? sortBy = null)
+        public Task<PagedResult<Portfolio>> ListPortfoliosAsync(int? pageSize = null, int? page = null, int? parentPortfolioId = null, bool? ignoreHeirarchy = null, GetPortfoliosCommand.SortByOptions? sortBy = null, bool? includeHidden = null)
         {
-            return api.GetAsync<PagedResult<Portfolio>>(GetPortfoliosPath(), new { pageSize = pageSize, page = page, parentPortfolioId = parentPortfolioId, ignoreHeirarchy = ignoreHeirarchy, sortBy = sortBy });
+            return api.GetAsync<PagedResult<Portfolio>>(GetPortfoliosPath(), new { pageSize = pageSize, page = page, parentPortfolioId = parentPortfolioId, ignoreHeirarchy = ignoreHeirarchy, sortBy = sortBy, includeHidden = includeHidden });
         }
 
         public Task<Portfolio> GetPortfolioAsync(int portfolioId, GetPortfolioCommand.SortByOptions? sortPortfoliosBy = null)

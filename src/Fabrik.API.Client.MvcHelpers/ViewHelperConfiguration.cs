@@ -50,5 +50,13 @@ namespace Fabrik.API.Client.MvcHelpers
             get { return this[FallbackImageUriKey] as string; }
             set { this[FallbackImageUriKey] = value; }
         }
+
+        private const string VersionKey = "version";
+        [ConfigurationProperty(VersionKey, IsRequired = false)]
+        public string Version
+        {
+            get { return this[VersionKey] as string; }
+            set { this[VersionKey] = value; }
+        }
     }
 }

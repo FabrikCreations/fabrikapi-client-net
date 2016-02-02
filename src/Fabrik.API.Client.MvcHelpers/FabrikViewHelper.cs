@@ -2,6 +2,7 @@
 using Fabrik.Common;
 using ImageResizer.FluentExtensions;
 using System;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -119,7 +120,7 @@ namespace Fabrik.API.Client.MvcHelpers
 
                 return null;
             }
-
+            
             Ensure.Argument.Is(image.MediaType == MediaType.Image, "The media item provided is not a valid image.");
             return GetImageUrl(image.Uri, builder);
         }
@@ -236,6 +237,24 @@ namespace Fabrik.API.Client.MvcHelpers
             img.MergeAttributes(new RouteValueDictionary(htmlAttributes));
             img.MergeAttribute("src", src);
             img.MergeAttribute("alt", alternateText);
+
+
+            var extension = Path.GetExtension(src);
+
+            if (extension.IsNotNullOrEmpty())
+            {
+                // Remove the leading "." and remove querystring
+                var query = extension.IndexOf('?');
+                if (query > 0)
+                {
+                    extension = extension.Substring(1, extension.IndexOf('?') - 1);
+                } else
+                {
+                    extension = extension.Substring(1);
+                }
+
+                img.MergeAttribute("class", "img-" + extension.ToLower());
+            }
 
             return MvcHtmlString.Create(img.ToString(TagRenderMode.SelfClosing));
         }
